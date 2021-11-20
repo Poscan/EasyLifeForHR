@@ -11,6 +11,6 @@ export default {
     },
 
     async GetUserGroup(): Promise<UserGroup[]> {
-        return (await axios.get("http://192.168.43.210:5000/api/user-groups")).data.map((x: IUserGroup) => new UserGroup(x));
+        return (await axios.get("http://192.168.43.210:5000/User/api/user-groups")).data.map((x: IUserGroup) => new UserGroup(x));
     }
   }
