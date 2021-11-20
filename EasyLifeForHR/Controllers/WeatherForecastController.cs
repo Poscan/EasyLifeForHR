@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using EasyLifeForHR.Domain;
+using Microsoft.EntityFrameworkCore;
 
 namespace EasyLifeForHR.Controllers
 {
@@ -29,7 +30,9 @@ namespace EasyLifeForHR.Controllers
         {
             using (var db = new DataContext())
             {
-                return db.Users;
+                return await db.Users
+                    .Include(x => x.Role)
+                    .ToListAsync();
             }
         }
 
