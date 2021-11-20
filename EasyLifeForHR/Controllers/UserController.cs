@@ -1,7 +1,5 @@
-﻿using System;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using EasyLifeForHR.Domain;
 using Microsoft.EntityFrameworkCore;
@@ -28,6 +26,23 @@ namespace EasyLifeForHR.Controllers
             using (var db = new DataContext())
             {
                 return await db.UsersGroups.ToListAsync();
+            }
+        }
+
+        [HttpPost]
+        public async Task SaveUser(User user)
+        {
+            using (var db = new DataContext())
+            {
+                var userForSave = await db.User.SingleOrDefaultAsync(x => x.Id == user.Id);
+                userForSave.LimitRefundMoney = user.LimitRefundMoney;
+                userForSave.Role = user.Role == null ? null
+                                                     : new UsersGroup
+                                                     {
+                                                         Id = user.Role.Id
+                                                     };
+
+                db.User.Update(userForSave);
             }
         }
     }
