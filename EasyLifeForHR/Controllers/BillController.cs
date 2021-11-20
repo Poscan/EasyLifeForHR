@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System;
+using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -63,7 +64,7 @@ namespace EasyLifeForHR.Controllers
             }
         }
 
-        [HttpPost("{billId}")]
+        [HttpPost("{billId}/change-status")]
         public async Task<IActionResult> ChangeBillStatus([FromRoute]int billId, int billStatusId)
         {
             try
@@ -84,6 +85,45 @@ namespace EasyLifeForHR.Controllers
             catch
             {
                 return BadRequest(false);
+            }
+        }
+
+        [HttpPost()]
+        public async Task<IActionResult> SaveBill([FromBody] Bill bill)
+        {
+            try
+            {
+                using (var db = new DataContext())
+                {
+                    if (bill.Id == 0)
+                    {
+                        await db.Bill.AddAsync(bill);
+                    }
+                    else
+                    {
+                        var dbBill = await db.Bill.SingleOrDefaultAsync(x => x.Id == bill.Id);
+                        dbBill.Comment = bill.Comment;
+                        dbBill.Date = bill.Date;
+                        dbBill.Link = bill.Link;
+                        dbBill.Name = bill.Name;
+                        dbBill.Status = bill.Status;
+                        dbBill.Frequency = bill.Frequency;
+                        dbBill.Type = bill.Type;
+                        dbBill.EndDate = bill.EndDate;
+                        dbBill.User = bill.User;
+
+                        db.Bill.Update(dbBill);
+
+                        await db.SaveChangesAsync();
+                    }
+
+                    return Ok();
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return BadRequest(e.Message);
             }
         }
     }
