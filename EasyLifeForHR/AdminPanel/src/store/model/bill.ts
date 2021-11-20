@@ -56,6 +56,7 @@ export interface IBill {
   comment: string;
   frequency: Frequency;
   endDate: Date | null;
+  amount: number;
 }
 
 export default class Bill implements IBill {
@@ -71,6 +72,7 @@ export default class Bill implements IBill {
       comment: "",
       frequency: new Frequency(),
       endDate: new Date(),
+      amount: 0,
     }
   ) {
     this.id = bill.id;
@@ -85,6 +87,7 @@ export default class Bill implements IBill {
       ? new Frequency(bill.frequency)
       : new Frequency();
     this.endDate = bill.endDate;
+    this.amount = bill.amount;
   }
 
   id: number;
@@ -97,4 +100,5 @@ export default class Bill implements IBill {
   comment: string;
   frequency: Frequency;
   endDate: Date | null;
+  amount: number;
 }
