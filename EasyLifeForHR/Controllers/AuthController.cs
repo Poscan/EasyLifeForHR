@@ -1,10 +1,6 @@
-﻿using System;
-using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
-using System.Linq;
+﻿using Microsoft.AspNetCore.Mvc;
 using System.Text;
 using System.Threading.Tasks;
-using EasyLifeForHR.Domain;
 using Microsoft.EntityFrameworkCore;
 
 namespace EasyLifeForHR.Controllers
@@ -27,9 +23,8 @@ namespace EasyLifeForHR.Controllers
                     if (passhash == user.Passhash) return Ok(true);
                     return BadRequest(false);
                 }
-
             }
-            catch(Exception e)
+            catch
             {
                 return BadRequest(false);
             }
