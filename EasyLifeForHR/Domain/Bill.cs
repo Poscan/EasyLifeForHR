@@ -27,5 +27,7 @@ namespace EasyLifeForHR.Domain
         public Frequency Frequency { get; set; }
         [Column("end_date")]
         public DateTime? EndDate { get; set; }
+        [Column("amount")]
+        public int Amount { get; set; }
     }
 }

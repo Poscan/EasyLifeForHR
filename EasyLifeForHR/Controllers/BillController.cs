@@ -46,6 +46,7 @@ namespace EasyLifeForHR.Controllers
                     .Where(x => x.User.Username == username)
                     .Include(x => x.Status)
                     .Include(x => x.Type)
+                    .Include(x => x.Frequency)
                     .ToListAsync();
             }
         }
