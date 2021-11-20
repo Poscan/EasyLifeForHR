@@ -55,11 +55,11 @@ namespace EasyLifeForHR.Controllers
         }
 
         [HttpGet("frequency")]
-        public async Task<IEnumerable<BillStatus>> GetAllFrequency()
+        public async Task<IEnumerable<Frequency>> GetAllFrequency()
         {
             using (var db = new DataContext())
             {
-                return await db.BillStatus.ToListAsync();
+                return await db.Frequencies.ToListAsync();
             }
         }
 
