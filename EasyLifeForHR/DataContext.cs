@@ -9,6 +9,11 @@ namespace EasyLifeForHR
         public DbSet<Bill> Bill { get; set; }
         public DbSet<BillType> BillType { get; set; }
         public DbSet<BillStatus> BillStatus { get; set; }
+        
+        public DbSet<Frequency> Frequencies { get; set; }
+
+        public DbSet<UsersGroup> UsersGroups { get; set; }
+
         public DataContext()
         {
             Database.EnsureCreated();
