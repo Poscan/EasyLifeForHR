@@ -1,6 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -56,15 +54,25 @@ namespace EasyLifeForHR.Controllers
             }
         }
 
+        [HttpGet("frequency")]
+        public async Task<IEnumerable<BillStatus>> GetAllFrequency()
+        {
+            using (var db = new DataContext())
+            {
+                return await db.BillStatus.ToListAsync();
+            }
+        }
+
         [HttpPost("{billId}")]
         public async Task<IActionResult> ChangeBillStatus([FromRoute]int billId, int billStatusId)
         {
             try
             {
-
                 using (var db = new DataContext())
                 {
                     var bill = await db.Bill.SingleOrDefaultAsync(x => x.Id == billId);
+
+                    if(bill == null) return BadRequest(false);
 
                     bill.Status = new BillStatus { Id = billStatusId };
 

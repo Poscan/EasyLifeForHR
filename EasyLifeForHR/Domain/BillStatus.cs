@@ -7,7 +7,7 @@ namespace EasyLifeForHR.Domain
     {
         [Column("id")]
         public virtual int Id { get; set; }
-        [Column("status_name")]
-        public virtual string StatusName { get; set; }
+        [Column("status")]
+        public virtual string Status { get; set; }
     }
 }
