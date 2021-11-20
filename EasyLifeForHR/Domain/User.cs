@@ -16,5 +16,7 @@ namespace EasyLifeForHR.Domain
         public string Username { get; set; }
         [Column("passhash")]
         public string Passhash { get; set; }
+        [Column("limit_refund_money")]
+        public long LimitRefundMoney { get; set; }
     }
 }

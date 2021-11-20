@@ -18,5 +18,14 @@ namespace EasyLifeForHR.Domain
         public virtual  BillStatus Status { get; set; }
         [ForeignKey("user_id")]
         public virtual  User User { get; set; }
+        [Column("link")]
+        public string Link { get; set; }
+        [Column("comment")]
+        public string Comment { get; set; }
+
+        [ForeignKey("frequency_id")]
+        public Frequency Frequency { get; set; }
+        [Column("end_date")]
+        public DateTime? EndDate { get; set; }
     }
 }
