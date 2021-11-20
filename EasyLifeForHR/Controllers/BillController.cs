@@ -51,6 +51,22 @@ namespace EasyLifeForHR.Controllers
             }
         }
 
+        [HttpGet("{userId}/interval")]
+        public async Task<IEnumerable<Bill>> GetBillByUserIdAndInterval([FromRoute] int userId, DateTime leftDate,
+            DateTime rightDate)
+        {
+            using (var db = new DataContext())
+            {
+                return await db.Bill.Include(x => x.User)
+                                    .Where(x => x.User.Id == userId)
+                                    .Where(x => x.Date >= leftDate && x.Date <= rightDate)
+                                    .Include(x => x.Frequency)
+                                    .Include(x => x.Status)
+                                    .Include(x => x.Type)
+                                    .ToListAsync();
+            }
+        }
+
         [HttpGet("bill-types")]
         public async Task<IEnumerable<BillType>> GetAllBillTypes()
         {

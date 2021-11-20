@@ -16,7 +16,6 @@ Vue.use(Buefy, {
   defaultFirstDayOfWeek: 1,
 });
 
-
 new Vue({
   router,
   store,
