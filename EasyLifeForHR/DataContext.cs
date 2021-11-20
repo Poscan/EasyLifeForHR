@@ -5,7 +5,10 @@ namespace EasyLifeForHR
 {
     public sealed class DataContext : DbContext
     {
-        public DbSet<User> Users { get; set; }
+        public DbSet<User> User { get; set; }
+        public DbSet<Bill> Bill { get; set; }
+        public DbSet<BillType> BillType { get; set; }
+        public DbSet<BillStatus> BillStatus { get; set; }
         public DataContext()
         {
             Database.EnsureCreated();
