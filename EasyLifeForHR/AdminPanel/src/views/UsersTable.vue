@@ -6,14 +6,14 @@
         {{ props.row.mail }}
       </b-table-column>
 
-      <b-table-column
-        field="limitRefundMoney"
-        label="Лимит выплаты"
-        v-slot="props"
-      >
-        <b-input v-model="props.row.limitRefundMoney" />
-        <!-- {{props.row.limitRefundMoney}} -->
-      </b-table-column>
+            <b-table-column field="role" label="Роль" v-slot="props">
+                <b-select v-model="props.row.role">
+                    <option v-for="roleElement in roles" :key="roleElement.id" :value="roleElement">
+                        {{roleElement.name}}
+                    </option>
+                </b-select>
+                <!-- {{props.row.limitRefundMoney}} -->
+            </b-table-column>
 
       <b-table-column
         field="limitRefundMoney"
@@ -56,17 +56,19 @@ export default Vue.extend({
       this.isLoading = false;
     },
 
-    async loadUserGroups() {
-      this.isLoading = true;
-
-      this.isLoading = false;
+        async loadUserGroups(){
+            this.isLoading = true;
+            const response = await Service.GetUserGroup();
+            this.roles = response ?? new Array<User>();
+            this.isLoading = false;
+        }
     },
-  },
 
-  async mounted() {
-    await this.loadUsers();
-  },
-});
+    async mounted() {
+        await this.loadUsers();
+        await this.loadUserGroups();
+    },
+})
 </script>
 
 <style scoped>
