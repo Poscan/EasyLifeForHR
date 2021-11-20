@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using EasyLifeForHR.Domain;
 
 namespace EasyLifeForHR.Controllers
 {
@@ -21,6 +22,15 @@ namespace EasyLifeForHR.Controllers
         public WeatherForecastController(ILogger<WeatherForecastController> logger)
         {
             _logger = logger;
+        }
+
+        [HttpGet("user")]
+        public async Task<IEnumerable<User>> GetUsers()
+        {
+            using (var db = new DataContext())
+            {
+                return db.Users;
+            }
         }
 
         [HttpGet]

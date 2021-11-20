@@ -1,6 +1,6 @@
 using System;
 
-namespace EasyLifeForHR
+namespace EasyLifeForHR.Domain
 {
     public class WeatherForecast
     {
