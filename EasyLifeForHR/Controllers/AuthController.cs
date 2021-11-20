@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Text;
 using System.Threading.Tasks;
+using EasyLifeForHR.Domain;
 using Microsoft.EntityFrameworkCore;
 
 namespace EasyLifeForHR.Controllers
@@ -17,11 +18,11 @@ namespace EasyLifeForHR.Controllers
                 using (var db = new DataContext())
                 {
                     var user = await db.User.SingleOrDefaultAsync(x => x.Username == login);
-                    if(user == null) return BadRequest(false);
+                    if(user == null) return Ok(null);
 
                     var passhash = GetMd5PasshashToPassword(password);
-                    if (passhash == user.Passhash) return Ok(true);
-                    return BadRequest(false);
+                    if (passhash == user.Passhash) return Ok(user.Id);
+                    return Ok(null);
                 }
             }
             catch

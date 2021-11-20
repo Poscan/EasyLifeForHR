@@ -37,6 +37,19 @@ namespace EasyLifeForHR.Controllers
             }
         }
 
+        [HttpGet("username/{username}")]
+        public async Task<IEnumerable<Bill>> GetBillsByUsername([FromRoute] string username)
+        {
+            using (var db = new DataContext())
+            {
+                return await db.Bill.Include(x => x.User)
+                    .Where(x => x.User.Username == username)
+                    .Include(x => x.Status)
+                    .Include(x => x.Type)
+                    .ToListAsync();
+            }
+        }
+
         [HttpGet("bill-types")]
         public async Task<IEnumerable<BillType>> GetAllBillTypes()
         {
