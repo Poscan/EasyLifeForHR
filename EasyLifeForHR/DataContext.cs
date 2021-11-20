@@ -13,9 +13,19 @@ namespace EasyLifeForHR
         {
             Database.EnsureCreated();
         }
+        
+        public DataContext(DbContextOptions<DataContext> option) : base(option)
+        {
+            Database.EnsureCreated();
+        }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseNpgsql("Host=89.223.64.189;Port=5432;Database=default_db;Username = gen_user; Password = EasyLifeForHR");
+            optionsBuilder.UseNpgsql("Host=89.223.64.189;Port=5432;Database=default_db;Username=gen_user;Password=EasyLifeForHR");
+        }
+        
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
         }
     }
 }
