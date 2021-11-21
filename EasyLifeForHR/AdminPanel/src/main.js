@@ -6,18 +6,16 @@ import Buefy from "buefy";
 import "buefy/dist/buefy.css";
 Vue.config.productionTip = false;
 Vue.use(Buefy, {
-  defaultClockpickerHoursLabel: "Часы",
-  defaultClockpickerMinutesLabel: "Мин.",
-  defaultTimeFormatter: "HH:mm",
-  defaultTimeParser: "HH:mm",
-  defaultModalScroll: "keep",
-  defaultFirstDayOfWeek: 1,
+    defaultClockpickerHoursLabel: "Часы",
+    defaultClockpickerMinutesLabel: "Мин.",
+    defaultTimeFormatter: "HH:mm",
+    defaultTimeParser: "HH:mm",
+    defaultModalScroll: "keep",
+    defaultFirstDayOfWeek: 1,
 });
 new Vue({
-  router: router,
-  store: store,
-  render: function (h) {
-    return h(App);
-  },
+    router: router,
+    store: store,
+    render: function (h) { return h(App); },
 }).$mount("#app");
 //# sourceMappingURL=main.js.map

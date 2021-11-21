@@ -36,13 +36,11 @@ namespace EasyLifeForHR.Controllers
             {
                 var userForSave = await db.User.SingleOrDefaultAsync(x => x.Id == user.Id);
                 userForSave.LimitRefundMoney = user.LimitRefundMoney;
-                userForSave.Role = user.Role == null ? null
-                                                     : new UsersGroup
-                                                     {
-                                                         Id = user.Role.Id
-                                                     };
+                userForSave.Role = user.Role;
 
                 db.User.Update(userForSave);
+
+                await db.SaveChangesAsync();
             }
         }
     }

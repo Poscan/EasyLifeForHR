@@ -20,6 +20,7 @@ namespace EasyLifeForHR.Controllers
                 return await db.Bill.Include(x => x.User)
                                     .Include(x => x.Status)
                                     .Include(x => x.Type)
+                                    .Include(x => x.Frequency)
                                     .ToListAsync();
             }
         }
@@ -33,6 +34,7 @@ namespace EasyLifeForHR.Controllers
                                     .Where(x => x.User.Id == userId)
                                     .Include(x => x.Status)
                                     .Include(x => x.Type)
+                                    .Include(x => x.Frequency)
                                     .ToListAsync();
             }
         }
@@ -108,6 +110,8 @@ namespace EasyLifeForHR.Controllers
                     bill.Status = new BillStatus { Id = billStatusId };
 
                     db.Bill.Update(bill);
+
+                    await db.SaveChangesAsync();
                     return Ok(true);
                 }
 
@@ -125,27 +129,69 @@ namespace EasyLifeForHR.Controllers
             {
                 using (var db = new DataContext())
                 {
-                    if (bill.Id == 0)
+                    var billToSave = await db.Bill
+                        .Include(x => x.Type)
+                        .Include(x => x.User)
+                        .Include(x => x.Frequency)
+                        .Include(x => x.Status)
+                        .SingleOrDefaultAsync(x => x.Id == bill.Id);
+                    if (billToSave == null)
                     {
-                        await db.Bill.AddAsync(bill);
+                        try
+                        {
+                            var frequency = bill.Frequency == null
+                                ? null
+                                : await db.Frequencies.SingleOrDefaultAsync(x => x.Id == bill.Frequency.Id);
+                            var user = bill.User == null
+                                ? null
+                                : await db.User.Include(x => x.Role)
+                                               .SingleOrDefaultAsync(x => x.Id == bill.User.Id);
+                            var status = bill.Status == null
+                                ? null
+                                : await db.BillStatus.SingleOrDefaultAsync(x => x.Id == bill.Status.Id);
+                            var type = bill.Type == null
+                                ? null
+                                : await db.BillType.SingleOrDefaultAsync(x => x.Id == bill.Type.Id);
+
+                            var billForSave = new Bill
+                            {
+                                Name = bill.Name,
+                                Type = type,
+                                Status = status,
+                                User = user,
+                                Frequency = frequency,
+                                Amount = bill.Amount,
+                                Comment = bill.Comment,
+                                Date = bill.Date,
+                                EndDate = bill.EndDate,
+                                Link = bill.Link
+                            };
+
+                            var result = await db.Bill.AddAsync(billForSave);
+                        }
+                        catch (Exception e)
+                        {
+                            Console.WriteLine(e);
+                            throw;
+                        }
+                        
                     }
                     else
                     {
-                        var dbBill = await db.Bill.SingleOrDefaultAsync(x => x.Id == bill.Id);
-                        dbBill.Comment = bill.Comment;
-                        dbBill.Date = bill.Date;
-                        dbBill.Link = bill.Link;
-                        dbBill.Name = bill.Name;
-                        dbBill.Status = bill.Status;
-                        dbBill.Frequency = bill.Frequency;
-                        dbBill.Type = bill.Type;
-                        dbBill.EndDate = bill.EndDate;
-                        dbBill.User = bill.User;
+                        billToSave.Comment = bill.Comment;
+                        billToSave.Date = bill.Date;
+                        billToSave.Link = bill.Link;
+                        billToSave.Name = bill.Name;
+                        billToSave.Status = bill.Status;
+                        billToSave.Frequency = bill.Frequency;
+                        billToSave.Type = bill.Type;
+                        billToSave.EndDate = bill.EndDate;
+                        billToSave.User = bill.User;
 
-                        db.Bill.Update(dbBill);
-
-                        await db.SaveChangesAsync();
+                        db.Bill.Update(billToSave);
                     }
+
+                    await db.SaveChangesAsync();
 
                     return Ok();
                 }

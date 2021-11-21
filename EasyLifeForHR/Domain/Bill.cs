@@ -9,7 +9,7 @@ namespace EasyLifeForHR.Domain
         [Column("id")]
         public virtual  long Id { get; set; }
         [Column("date")]
-        public virtual  DateTime Date { get; set; }
+        public virtual  DateTime? Date { get; set; }
         [Column("name")]
         public virtual  string Name { get; set; }
         [ForeignKey("bill_type_id")]
