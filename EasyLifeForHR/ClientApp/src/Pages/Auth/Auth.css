@@ -1,0 +1,40 @@
+@import url("https://fonts.googleapis.com/css2?family=Comfortaa:wght@300&display=swap");
+
+.backgroundTop {
+  position: absolute;
+  z-index: -1;
+  clip-path: polygon(0% 0%, 100% 0%, 100% 25%, 0% 90%);
+  background: linear-gradient(to bottom left, #52adfc, #0084f6);
+  height: 600px;
+  width: 100%;
+}
+
+.backgroundBottom {
+  position: absolute;
+  bottom: 0;
+  z-index: -1;
+  clip-path: polygon(100% 0%, 100% 0%, 100% 100%, 40% 100%);
+  background: linear-gradient(to bottom left, #52adfc, #0084f6);
+  height: 200px;
+  width: 100%;
+}
+
+.background {
+  display: flex;
+  justify-content: space-evenly;
+  vertical-align: center;
+}
+.authForm {
+  margin-top: 100px;
+  background: white;
+  height: 500px;
+  width: 440px;
+  border-radius: 20px;
+  box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+.authFormHeader {
+  font-family: "Comfortaa", cursive;
+  font-weight: bold;
+  font-size: 42px;
+}

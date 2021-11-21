@@ -1,16 +1,18 @@
-import React from 'react';
-import Header from './header/header'
-import Footer from './footer/footer'
-import './App.css';
+import { Provider } from "react-redux";
+import { applyMiddleware, createStore } from "redux";
+import createSagaMiddleware from "redux-saga";
+import { store } from "./store/reducersMerge";
+import "./App.css";
+import { AuthPage } from "./Pages/Auth/Auth";
+import { LowRankUserPage } from "./Pages/LowRankUser/LowRankUser";
+import { Navigator } from "./Components/Navigator";
 
 function App() {
   return (
-    <div className="App">
-      <Header />
-      <div class="dashboard">
-        <h1>Simple React App served by NGINX and Docker</h1>
-      </div>
-      <Footer />
+    <div>
+      <Provider store={store}>
+        <Navigator />
+      </Provider>
     </div>
   );
 }
